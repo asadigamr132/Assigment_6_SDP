@@ -2,10 +2,6 @@ package com.aitu.visitor;
 
 import java.util.Objects;
 
-/**
- * Counts files and directories and records maximum element depth.
- * The root passed to calculate() has depth zero.
- */
 public class StatisticsVisitor implements Visitor {
 
     private int fileCount;
