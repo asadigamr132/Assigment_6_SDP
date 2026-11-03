@@ -1,5 +1,7 @@
 package com.aitu.visitor;
 
+import java.util.Objects;
+
 public class FileNode implements Element {
 
     private final String name;
@@ -7,6 +9,9 @@ public class FileNode implements Element {
     private DirectoryNode parent;
 
     public FileNode(String name, long size) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("File name cannot be empty");
+        }
         if (size < 0) {
             throw new IllegalArgumentException("Size cannot be negative");
         }
@@ -29,7 +34,7 @@ public class FileNode implements Element {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(this);
+        Objects.requireNonNull(visitor, "Visitor cannot be null").visit(this);
     }
 
     @Override

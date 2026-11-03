@@ -3,6 +3,7 @@ package com.aitu.visitor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class DirectoryNode implements Element {
 
@@ -11,6 +12,9 @@ public class DirectoryNode implements Element {
     private DirectoryNode parent;
 
     public DirectoryNode(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Directory name cannot be empty");
+        }
         this.name = name;
     }
 
@@ -24,23 +28,37 @@ public class DirectoryNode implements Element {
     }
 
     public void addChild(Element child) {
-        if (child == null) {
-            throw new IllegalArgumentException("Child cannot be null");
-        }
+        Objects.requireNonNull(child, "Child cannot be null");
+
         if (child.getParent() != null) {
             throw new IllegalArgumentException("Element already has a parent");
         }
+
         for (Element existing : children) {
             if (existing.getName().equals(child.getName())) {
-                throw new IllegalArgumentException("Duplicate child name");
+                throw new IllegalArgumentException("Duplicate child name: " + child.getName());
             }
         }
+
+        DirectoryNode current = this;
+        while (current != null) {
+            if (current == child) {
+                throw new IllegalArgumentException("Adding this element would create a cycle");
+            }
+            current = current.getParent();
+        }
+
+        child.accept(new ParentAssignmentVisitor(this));
         children.add(child);
+    }
+
+    void assignParent(DirectoryNode parent) {
+        this.parent = parent;
     }
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(this);
+        Objects.requireNonNull(visitor, "Visitor cannot be null").visit(this);
     }
 
     @Override
