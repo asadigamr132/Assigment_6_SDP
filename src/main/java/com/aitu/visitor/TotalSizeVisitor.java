@@ -2,9 +2,6 @@ package com.aitu.visitor;
 
 import java.util.Objects;
 
-/**
- * Calculates the sum of all file sizes in an element's subtree.
- */
 public class TotalSizeVisitor implements Visitor {
 
     private long totalSize;
