@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-/**
- * Finds files by name predicate and inclusive minimum size.
- * Returned paths are relative to the element passed to search().
- */
 public class SearchVisitor implements Visitor {
 
     private final Predicate<String> nameCriterion;
