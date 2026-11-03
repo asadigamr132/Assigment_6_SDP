@@ -1,15 +1,15 @@
 package com.aitu.visitor;
 
-public class FileNode implements Element{
+public class FileNode implements Element {
 
     private final String name;
     private final long size;
     private DirectoryNode parent;
+
     public FileNode(String name, long size) {
         if (size < 0) {
             throw new IllegalArgumentException("Size cannot be negative");
         }
-
         this.name = name;
         this.size = size;
     }
@@ -18,14 +18,14 @@ public class FileNode implements Element{
         this.parent = parent;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public long getSize(){
+    public long getSize() {
         return size;
     }
-
 
     @Override
     public void accept(Visitor visitor) {
@@ -33,7 +33,7 @@ public class FileNode implements Element{
     }
 
     @Override
-    public DirectoryNode getParent(){
+    public DirectoryNode getParent() {
         return parent;
     }
 }
