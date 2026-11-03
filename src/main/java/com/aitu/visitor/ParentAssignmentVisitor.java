@@ -1,9 +1,5 @@
 package com.aitu.visitor;
 
-/**
- * Internal visitor used by DirectoryNode to set parent links without casts
- * or exposing a public parent setter on Element.
- */
 final class ParentAssignmentVisitor implements Visitor {
 
     private final DirectoryNode parent;
